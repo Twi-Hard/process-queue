@@ -24,7 +24,7 @@ impl ToString for Task {
     fn to_string(&self) -> String {
         std::iter::once(&self.binary)
             .chain(self.args.iter())
-            .map(|s| shlex::quote(s))
+            .map(|s| shlex::try_quote(s).expect("Failed to quote string"))
             .collect::<Vec<_>>()
             .join(" ")
     }
