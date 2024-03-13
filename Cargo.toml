@@ -30,4 +30,3 @@ shlex = "1"
 simplelog = { version = "0.10", default-features = false }
 structopt = { version = "0.3", default-features = false }
 tokio = { version = "1", features = ["net", "process", "rt-multi-thread", "io-util", "sync", "signal", "macros", "time"] }
-colored = "2.0"
