@@ -153,7 +153,7 @@ impl ToString for Template {
             .map(|piece| match piece {
                 Piece::Arg => ARG_STR.into(),
                 Piece::VarArg => VAR_ARG_STR.into(),
-                Piece::Static(s) => shlex::quote(s),
+                Piece::Static(s) => shlex::try_quote(s).expect("Failed to quote string"),
             })
             .collect::<Vec<_>>()
             .join(" ")
