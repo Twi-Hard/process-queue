@@ -25,6 +25,7 @@ pub struct Send {
     pub name: String,
     pub timeout: Option<Duration>,
     pub dir: Option<PathBuf>,
+    pub immediate: bool,
     pub args: Vec<String>,
 }
 

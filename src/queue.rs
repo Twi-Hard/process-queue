@@ -20,6 +20,11 @@ impl<T> Queue<T> {
         self.semaphore.add_permits(1);
     }
 
+    pub async fn push_immediate(&self, task: T) {
+        self.queue.lock().await.push_front(task);
+        self.semaphore.add_permits(1);
+    }
+
     pub async fn pop(&self) -> T {
         self.semaphore.acquire().await.unwrap().forget();
         self.queue.lock().await.pop_front().expect("empty queue")

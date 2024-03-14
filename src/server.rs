@@ -155,8 +155,16 @@ impl ClientHandler {
                 dir: req.dir,
                 args,
             };
-            info!("received task '{}'", task.to_string());
-            worker.queue.push(task).await;
+            if req.immediate {
+                info!(
+                    "received task '{}' for immediate execution",
+                    task.to_string()
+                );
+                worker.queue.push_immediate(task).await;
+            } else {
+                info!("received task '{}'", task.to_string());
+                worker.queue.push(task).await;
+            }
             response::ok()
         } else {
             bail!("queue '{}' does not exist", &req.name);
