@@ -219,6 +219,7 @@ OPTIONS:
     -d, --dir <dir>            Working directory
     -n, --name <name>          Task name [default: default]
     -T, --timeout <timeout>    Task timeout
+    -i, --immediate            Place task at the front of the queue
 
 ARGS:
     <args>...
