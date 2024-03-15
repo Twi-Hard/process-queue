@@ -54,6 +54,8 @@ pub struct SendTaskCommand {
     pub dir: Option<PathBuf>,
     #[structopt(short = "T", long, help = "Task timeout", parse(try_from_str = parse_duration))]
     pub timeout: Option<Duration>,
+    #[structopt(short = "i", long, help = "Place task at the front of the queue")]
+    pub immediate: bool,
     pub args: Vec<String>,
 }
 

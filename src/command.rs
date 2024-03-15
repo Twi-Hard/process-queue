@@ -86,7 +86,13 @@ pub async fn send(args: GlobalArgs, command: SendTaskCommand) -> Result<()> {
     let path = args.socket();
     let mut client = QueueClient::connect(path).await?;
     client
-        .send(command.name, command.timeout, command.dir, command.args)
+        .send(
+            command.name,
+            command.timeout,
+            command.dir,
+            command.immediate,
+            command.args,
+        )
         .await?;
     Ok(())
 }

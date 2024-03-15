@@ -67,12 +67,14 @@ impl QueueClient {
         name: String,
         timeout: Option<Duration>,
         dir: Option<PathBuf>,
+        immediate: bool,
         args: Vec<String>,
     ) -> Result<response::Empty> {
         let request = request::Send {
             name,
             dir,
             timeout,
+            immediate,
             args,
         };
         self.request(request).await
