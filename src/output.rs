@@ -52,7 +52,20 @@ impl Forwarder {
     async fn serve(&mut self) -> io::Result<()> {
         debug!("output forwarder '{}' started", self.name);
         while let Some(line) = self.reader.next_line().await? {
-            let line = format!("{}{}", self.name, line);
+            let line = if line.starts_with('\x1B') {
+                let mut chars = line.chars();
+                let mut sequence = String::new();
+                while let Some(c) = chars.next() {
+                    sequence.push(c);
+                    if c == 'm' {
+                        break;
+                    }
+                }
+                format!("{}{}{}", sequence, self.name, chars.collect::<String>())
+            } else {
+                format!("{}{}", self.name, line)
+            };
+        
             if self.line_sender.send(line).is_err() {
                 debug!("error forwarding output from '{}'", self.name);
                 break;
