@@ -72,11 +72,8 @@ impl Process {
         if let Some(ref dir) = task.dir {
             command.current_dir(dir);
         }
+        // We have spawned the child process
         let child = command.spawn()?;
-        // We have never polled child so id() should never return None
-        let pid = child.id().map(|pid| pid.to_string()).unwrap();
-        // stdout.set_prefix(format!("[{}:stdout]: ", pid)).unwrap();
-        // stderr.set_prefix(format!("[{}:stderr]: ", pid)).unwrap();
         stdout.set_prefix(String::new()).unwrap();
         stderr.set_prefix(String::new()).unwrap();
         Ok(Self {
