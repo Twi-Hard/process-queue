@@ -77,6 +77,8 @@ impl Process {
         let pid = child.id().map(|pid| pid.to_string()).unwrap();
         // stdout.set_prefix(format!("[{}:stdout]: ", pid)).unwrap();
         // stderr.set_prefix(format!("[{}:stderr]: ", pid)).unwrap();
+        stdout.set_prefix(format!("", pid)).unwrap();
+        stderr.set_prefix(format!("", pid)).unwrap();
         Ok(Self {
             child,
             task,
