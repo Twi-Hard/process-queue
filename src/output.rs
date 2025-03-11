@@ -52,7 +52,11 @@ impl Forwarder {
     async fn serve(&mut self) -> io::Result<()> {
         debug!("output forwarder '{}' started", self.name);
         while let Some(line) = self.reader.next_line().await? {
-            let line = if line.starts_with('\x1B') {
+            // Check if the prefix is empty - if so, just send the line as-is
+            let line = if self.name.is_empty() {
+                line
+            } else if line.starts_with('\x1B') {
+                // Handle ANSI escape sequence case
                 let mut chars = line.chars();
                 let mut sequence = String::new();
                 while let Some(c) = chars.next() {
@@ -63,6 +67,7 @@ impl Forwarder {
                 }
                 format!("{}{}{}", sequence, self.name, chars.collect::<String>())
             } else {
+                // Normal case with prefix
                 format!("{}{}", self.name, line)
             };
         
