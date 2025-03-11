@@ -75,8 +75,8 @@ impl Process {
         let child = command.spawn()?;
         // We have never polled child so id() should never return None
         let pid = child.id().map(|pid| pid.to_string()).unwrap();
-        stdout.set_prefix(format!("[{}:stdout]: ", pid)).unwrap();
-        stderr.set_prefix(format!("[{}:stderr]: ", pid)).unwrap();
+        // stdout.set_prefix(format!("[{}:stdout]: ", pid)).unwrap();
+        // stderr.set_prefix(format!("[{}:stderr]: ", pid)).unwrap();
         Ok(Self {
             child,
             task,
